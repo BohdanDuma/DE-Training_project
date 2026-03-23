@@ -30,6 +30,8 @@ def extractor_test(args):
         col = da.get_column(0)
         print(f"--- SQL SELECT col_0 FROM {da.name} ---")
         print(col)
+        for col in da.columns:
+            print(f"Середнє стовпця: {da.get_method('std', 'numpy')}")
     except Exception as e:
         print(f"Error in extractor: {e}") # Якщо в аргументах не JSON     
 if __name__ == "__main__":
@@ -39,6 +41,7 @@ if __name__ == "__main__":
         sys.exit(1)
     if args[0].startswith('['):
         extractor_test(args[0])
+        
     else:
         benchmark_for_num_and_man(args)
 
