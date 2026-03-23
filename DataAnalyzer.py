@@ -37,10 +37,15 @@ class DataAnalyzer:
     #preparation method
     def _prep_data(self,ls):
         try:
-            proces = [float(x) for x in ls]
-            return proces
+            return np.array(ls)
         except (ValueError, TypeError):
             raise ValueError('Input date must be digit')
+    def _get_column(self,n):
+        if self.data.ndim > 1:
+            return self.data[:,n] 
+        else:
+            print(f"This is 1D array in {self.name} obj")
+            return None
     def _np_mean(self):
         return np.mean(np.array(self.data))
     def _np_median(self):
