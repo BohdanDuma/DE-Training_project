@@ -70,21 +70,4 @@ class DataAnalyzer:
         sum_sq = sum((x-Mu)**2 for x in flat_data)
         var = sum_sq/ln
         return var ** 0.5
-if __name__ == "__main__":
-    args = sys.argv[1:]
-    if not args[1:]:
-        print('Use: python your_script.py [digit]"')
-        sys.exit(1)
-    analyzer = DataAnalyzer('BashTest',args)
-    res_m = analyzer.get_method('std', 'manual')
-    res_n = analyzer.get_method('std', 'numpy')
 
-    print(f"--- Analyz {analyzer.name} ---")
-    print(f"Manual STD: {res_m:.5f}")
-    print(f"NumPy STD:  {res_n:.5f}")
-
-    t_m = timeit.timeit(lambda: analyzer.get_method('std', 'manual'), number=100)
-    t_n = timeit.timeit(lambda: analyzer.get_method('std', 'numpy'), number=100)
-    print(f"\nTime (100 iteration):")
-    print(f"Manual: {t_m:.5f} sec")
-    print(f"NumPy:  {t_n:.5f} sec")   
