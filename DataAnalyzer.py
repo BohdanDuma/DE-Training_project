@@ -5,12 +5,14 @@ from datetime import datetime, timedelta
 # 2. Third-party imports
 import pandas as pd
 import numpy as np
+import sys
+import timeit
 
 
 
 class DataAnalyzer:
-    def __init__(self, param: str, ls):
-        self.param = param
+    def __init__(self, name, ls):
+        self.name = name
         self.data = self._prep_data(ls)
     #dispatcher method
     def get_method(self, param='mean', method='manual'):
@@ -33,9 +35,9 @@ class DataAnalyzer:
         else:
             raise ValueError(f'Problem with parametr or method')
     #preparation method
-    def _prep_data(self):
+    def _prep_data(self,ls):
         try:
-            proces = [float(x) for x in self.ls]
+            proces = [float(x) for x in ls]
             return proces
         except (ValueError, TypeError):
             raise ValueError('Input date must be digit')
@@ -57,7 +59,24 @@ class DataAnalyzer:
     def _std(self):
         ln = len(self.data)
         Mu = self._mean()
-        sum_sq = sum((x-Mu)**2 for x in self.date)
+        sum_sq = sum((x-Mu)**2 for x in self.data)
         var = sum_sq/ln
         return var ** 0.5
-    
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    if not args[1:]:
+        print('Use: python your_script.py [digit]"')
+        sys.exit(1)
+    analyzer = DataAnalyzer('BashTest',args)
+    res_m = analyzer.get_method('std', 'manual')
+    res_n = analyzer.get_method('std', 'numpy')
+
+    print(f"--- Analyz {analyzer.name} ---")
+    print(f"Manual STD: {res_m:.5f}")
+    print(f"NumPy STD:  {res_n:.5f}")
+
+    t_m = timeit.timeit(lambda: analyzer.get_method('std', 'manual'), number=100)
+    t_n = timeit.timeit(lambda: analyzer.get_method('std', 'numpy'), number=100)
+    print(f"\nTime (100 iteration):")
+    print(f"Manual: {t_m:.5f} sec")
+    print(f"NumPy:  {t_n:.5f} sec")   

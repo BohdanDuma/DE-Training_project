@@ -1,0 +1,14 @@
+--- Analyz BashTest ---
+Manual STD: 288.67499
+NumPy STD:  288.67499
+
+Time (100 iteration):
+Manual: 0.00711 sec
+NumPy:  0.00484 sec
+--- Analyz BashTest ---
+Manual STD: 288.67499
+NumPy STD:  288.67499
+
+Time (100 iteration):
+Manual: 0.00869 sec
+NumPy:  0.00455 sec
