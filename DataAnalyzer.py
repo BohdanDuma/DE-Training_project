@@ -70,4 +70,8 @@ class DataAnalyzer:
         sum_sq = sum((x-Mu)**2 for x in flat_data)
         var = sum_sq/ln
         return var ** 0.5
-
+    @property
+    def column(self):
+        if self.data.ndim > 1:
+            return [self.data[:,i] for i in range(self.data.shape[1])]
+        return [self.data]
