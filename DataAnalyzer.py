@@ -37,10 +37,10 @@ class DataAnalyzer:
     #preparation method
     def _prep_data(self,ls):
         try:
-            return np.array(ls)
+            return np.array(ls, dtype=float)
         except (ValueError, TypeError):
             raise ValueError('Input date must be digit')
-    def _get_column(self,n):
+    def get_column(self,n):
         if self.data.ndim > 1:
             return self.data[:,n] 
         else:
@@ -53,18 +53,21 @@ class DataAnalyzer:
     def _np_std(self):
         return np.std(np.array(self.data))
     def _mean(self):
-        return sum(self.data)/len(self.data)
+        flat_data = self.data.flatten()
+        return sum(flat_data)/len(flat_data)
     def _median(self):
-        ln = len(self.data)
-        sort_ls = sorted(self.data)
+        flat_data = self.data.flatten()
+        ln = len(flat_data)
+        sort_ls = sorted(flat_data)
         if ln % 2 == 0:
             return (sort_ls[ln//2 - 1] + sort_ls[ln//2])/2
         else:
             return sort_ls[ln//2]
     def _std(self):
-        ln = len(self.data)
+        flat_data = self.data.flatten()
+        ln = len(flat_data)
         Mu = self._mean()
-        sum_sq = sum((x-Mu)**2 for x in self.data)
+        sum_sq = sum((x-Mu)**2 for x in flat_data)
         var = sum_sq/ln
         return var ** 0.5
 if __name__ == "__main__":
