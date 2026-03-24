@@ -1,6 +1,7 @@
 #!/bin/bash
 #variable for test ekstactor
 TEST='python test.py'
+LOG='Logs.txt'
 #test menu logik
 MENU() {
     echo -e "\n--- DataAnalyzer Testing Menu ---"
@@ -20,10 +21,17 @@ while true
                 $TEST "$MATRIX"
                 ;;
             2)
+
                 echo "Введіть числа через пробіл:"
+                read -a ARR
+                $TEST "$ARR"
                 ;;
             3)
                 echo "Запуск повного циклу тестів..."
+                echo -r "---TEST ($date)($time)---"
+                $TEST '[[10,20],[30,40]]' >> log.txt && echo "Extraction done"
+                $TEST 1 2 3 4 5 >> log.txt $$ echo "Speed test done"
+                echo "results in $LOG"
                 ;;
             q) 
                 echo "BYE-BYE"

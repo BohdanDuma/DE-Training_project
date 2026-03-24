@@ -3,12 +3,9 @@ import json
 import timeit
 from DataAnalyzer import DataAnalyzer
 def benchmark_for_num_and_man(data):
-    try:
-        numeric_data = [float(x) for x in data]
-    except ValueError:
-        print("Error: For benchmark, provide a list of numbers.")
-        return
-    analyzer = DataAnalyzer('BashTest',args)
+    analyzer = DataAnalyzer('BashTest',data)
+    
+    
     res_m = analyzer.get_method('std', 'manual')
     res_n = analyzer.get_method('std', 'numpy')
     print(f"--- Analyz {analyzer.name} ---")
@@ -30,7 +27,7 @@ def extractor_test(args):
         col = da.get_column(0)
         print(f"--- SQL SELECT col_0 FROM {da.name} ---")
         print(col)
-        for col in da.columns:
+        for col in da.column:
             print(f"Середнє стовпця: {da.get_method('std', 'numpy')}")
     except Exception as e:
         print(f"Error in extractor: {e}") # Якщо в аргументах не JSON     
@@ -43,7 +40,12 @@ if __name__ == "__main__":
         extractor_test(args[0])
         
     else:
-        benchmark_for_num_and_man(args)
+        try:
+            # Конвертуємо ТУТ, перед викликом функції
+            numeric_args = [float(x) for x in args]
+            benchmark_for_num_and_man(numeric_args)
+        except ValueError:
+            print("Error: For benchmark, provide a list of numbers.")
 
         
     
