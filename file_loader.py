@@ -32,4 +32,4 @@ if __name__ == "__main__":
     p = os.getcwd()
     extention = type_dict.get(a)
     list_j = recysion_search_json(p, a)
-    print(f'Список з {extention} файлів соформовано') 
+    print(f'Список з {extention} файлів соформовано. Довжина {len(list_j)}') 
