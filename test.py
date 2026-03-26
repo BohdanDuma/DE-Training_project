@@ -4,8 +4,6 @@ import timeit
 from DataAnalyzer import DataAnalyzer
 def benchmark_for_num_and_man(data):
     analyzer = DataAnalyzer('BashTest',data)
-    
-    
     res_m = analyzer.get_method('std', 'manual')
     res_n = analyzer.get_method('std', 'numpy')
     print(f"--- Analyz {analyzer.name} ---")
