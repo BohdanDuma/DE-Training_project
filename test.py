@@ -2,6 +2,19 @@ import sys
 import json
 import timeit
 from DataAnalyzer import DataAnalyzer
+>>>>>>def run_cli():
+    args = sys.argv[1:]
+    if not args:
+        print("Error: there isn't data for analyze")
+        return
+    try:
+        if args[0].startswith('['):
+            data = json.loads(args)
+            da = DataAnalyzer("Matrixdata", data)
+            # Info about col
+            cols = da.data.shape[1] if da.data.ndim > 1 else 1
+            <<<<<<<
+
 def benchmark_for_num_and_man(data):
     analyzer = DataAnalyzer('BashTest',data)
     res_m = analyzer.get_method('std', 'manual')
@@ -9,24 +22,16 @@ def benchmark_for_num_and_man(data):
     print(f"--- Analyz {analyzer.name} ---")
     print(f"Manual STD: {res_m:.5f}")
     print(f"NumPy STD:  {res_n:.5f}")
-    t_m = timeit.timeit(lambda: analyzer.get_method('std', 'manual'), number=100)
-    t_n = timeit.timeit(lambda: analyzer.get_method('std', 'numpy'), number=100)
-    print(f"\nTime (100 iteration):")
-    print(f"Manual: {t_m:.5f} sec")
-    print(f"NumPy:  {t_n:.5f} sec")   
+
 def extractor_test(args):
     if len(args)<2: return
     try:
         # Чекаємо рядок вигляду: '[[1,2],[3,4]]'
         input_data = json.loads(args)
         da = DataAnalyzer("BashMatrix", input_data)
-        
-        # Тестуємо 1-й стовпець (індекс 0)
-        col = da.get_column(0)
-        print(f"--- SQL SELECT col_0 FROM {da.name} ---")
-        print(col)
-        for col in da.column:
-            print(f"Середнє стовпця: {da.get_method('std', 'numpy')}")
+        # Does it see columns
+        num_col = da.data.shape(1)
+        print(f"Object {da.name} has {num_col} columns")
     except Exception as e:
         print(f"Error in extractor: {e}") # Якщо в аргументах не JSON     
 if __name__ == "__main__":
