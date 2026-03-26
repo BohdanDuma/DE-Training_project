@@ -134,3 +134,18 @@ class DataAnalyzer:
         if self.data.ndim > 1:
             return [self.data[:,i] for i in range(self.data.shape[1])]
         return [self.data]
+if __name__ == "__main__":
+    rng = np.random.default_rng()
+    arr1 = rng.random(10)
+    arr2 = rng.random(10000)
+    test_sort = DataAnalyzer('Sorting', arr1)
+    test_sort_2 = DataAnalyzer('Sorting', arr2)
+    test_sort._buble_sort()
+    test_sort._merge_sort()
+    test_sort_2._buble_sort()
+    test_sort_2._merge_sort()
+    test_sort._python_sort()
+    test_sort._numpy_sort()
+    test_sort_2._python_sort()
+    test_sort_2._numpy_sort()
+   

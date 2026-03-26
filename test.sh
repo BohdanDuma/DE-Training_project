@@ -5,9 +5,11 @@ LOG='Logs.txt'
 #test menu logik
 MENU() {
     echo -e "\n--- DataAnalyzer Testing Menu ---"
-    echo "1 - Extraction Test (JSON Matrix)"
+    echo "1 - Extraction (JSON Matrix)"
     echo "2 - Benchmark (Manual vs NumPy)"
     echo "3 - Run All Tests & Save to Log"
+    echo "4 - Sorting test benchmark"
+    echo "5 - Sorting"
     echo "q - Quit"
 }
 while true
@@ -28,11 +30,19 @@ while true
                 ;;
             3)
                 echo "Запуск повного циклу тестів..."
-                echo -r "---TEST ($date)($time)---"
+                echo -r "---TEST ($date) ($time)---"
                 $TEST '[[10,20],[30,40]]' >> log.txt && echo "Extraction done"
-                $TEST 1 2 3 4 5 >> log.txt $$ echo "Speed test done"
+                $TEST 1 2 3 4 5 >> log.txt && echo "Speed test done"
                 echo "results in $LOG"
                 ;;
+           >>>>> 4) 
+                echo "Sorting tests"
+                echo "Input len of your list"
+                read LEN
+                <<<<<<
+
+            5) 
+                echo         
             q) 
                 echo "BYE-BYE"
                 exit 0
