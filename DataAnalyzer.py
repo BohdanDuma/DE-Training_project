@@ -2,7 +2,7 @@
 import os
 from datetime import datetime, timedelta
 import time 
-from functools import wraps
+from functools import wraps, lru_cache
 
 # 2. Third-party imports
 import pandas as pd
@@ -134,9 +134,21 @@ class DataAnalyzer:
         if self.data.ndim > 1:
             return [self.data[:,i] for i in range(self.data.shape[1])]
         return [self.data]
+class TimeSerialsAnalyzer(DataAnalyzer):
+    def __init__(self, name, ls):
+        super().__init__(name, ls) 
+        self.data.flags.writeable = False
+    @time_it
+    @lru_cache(maxsize=None) 
+    def sma(self, win=3):
+        if win > len(self.data) or win <= 0:
+            return np.array([])
+        window = np.ones(win)
+        return np.convolve(self.data, window,mode='valid') // win 
 if __name__ == "__main__":
     rng = np.random.default_rng()
     arr1 = rng.random(10)
+    arr3 = rng.random(100)
     arr2 = rng.random(10000)
     test_sort = DataAnalyzer('Sorting', arr1)
     test_sort_2 = DataAnalyzer('Sorting', arr2)
@@ -148,4 +160,7 @@ if __name__ == "__main__":
     test_sort._numpy_sort()
     test_sort_2._python_sort()
     test_sort_2._numpy_sort()
-   
+    test_sma_obj = TimeSerialsAnalyzer('SMA', arr3)
+    test_sma_obj.sma(3)
+    test_sma_obj.sma(3)
+    test_sma_obj.sma(3)
