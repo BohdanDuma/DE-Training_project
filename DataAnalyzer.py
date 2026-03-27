@@ -129,11 +129,23 @@ class DataAnalyzer:
     def _python_sort(self):
         flat_data = sorted(self.data.flatten())
         return flat_data
-    @property
-    def column(self):
-        if self.data.ndim > 1:
-            return [self.data[:,i] for i in range(self.data.shape[1])]
-        return [self.data]
+    def column(self, n_col = 0, all_col=False):
+        try:
+            if self.data.ndim > 1:
+                if all_col:
+                    return [self.data[:,i] for i in range(self.data.shape[1])]
+            if n_col >= self.data.shape[1]:
+                raise IndexError(f"array doesn't have {n_col}")
+            return [self.data[:,n_col]]  
+            if all_col:
+                return [self.data]
+            return self.data
+        except IndexError:
+            print("array doesn't have {n_col}")
+            return None
+        except Exception as e:
+            print(f"uncnown {e}")
+            return None
 class TimeSerialsAnalyzer(DataAnalyzer):
     def __init__(self, name, ls):
         super().__init__(name, ls) 
@@ -144,7 +156,7 @@ class TimeSerialsAnalyzer(DataAnalyzer):
         if win > len(self.data) or win <= 0:
             return np.array([])
         window = np.ones(win)
-        return np.convolve(self.data, window,mode='valid') // win 
+        return np.convolve(self.data, window,mode='valid') / win 
 if __name__ == "__main__":
     rng = np.random.default_rng()
     arr1 = rng.random(10)
