@@ -46,18 +46,7 @@ class DataAnalyzer:
             return func()
         else:
             raise ValueError(f'Problem with parametr or method')
-    #preparation method
-    def _prep_data(self,ls):
-        try:
-            return np.array(ls, dtype=float)
-        except (ValueError, TypeError):
-            raise ValueError('Input date must be digit')
-    def get_column(self,n):
-        if self.data.ndim > 1:
-            return self.data[:,n] 
-        else:
-            print(f"This is 1D array in {self.name} obj")
-            return None
+    
     @time_it
     def _np_mean(self):
         return np.mean(np.array(self.data))
