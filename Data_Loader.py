@@ -80,13 +80,7 @@ class SmartExtractor(SearchFile):
             return None, False
 
 dl = SmartExtractor('ex1', '.csv', '/home/bohdan/Стільниця')
-
-
 print(dl)
-
-
 result = dl.smart_logic('1111', )
-
-
 final_data, is_matrix = result
 print(f"Final shape: {final_data.shape}, Is Matrix: {is_matrix}")
